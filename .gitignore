@@ -1,0 +1,8 @@
+*.pth
+__pycache__
+LICENSE
+*.md
+venv
+requirements2.txt
+gradio
+figures
