@@ -5,6 +5,7 @@ from PIL import Image
 import numpy as np
 import torch
 from torch.autograd import Variable
+import cv2
 
 class ImageSegmentator:
     def __init__(self, weight_path, model_name='u2net', device=torch.device("cuda:0" if torch.cuda.is_available() else "cpu")):
@@ -158,10 +159,12 @@ def normPRED(d):
     return dn
 
 def output_result(ori_img, result_img):
+	H, W = ori_img.shape[0], ori_img.shape[1]
 	predict = result_img.squeeze()
-	predict_np = predict.cpu().data.numpy()
-	im = Image.fromarray(predict_np*255).convert('RGB')
-	imo = im.resize((ori_img.shape[1], ori_img.shape[0]),resample=Image.BILINEAR)
+	predict_np = predict.cpu().data.numpy() * 255
+	im = Image.fromarray(predict_np).convert('RGB')
+	imo = im.resize((W, H),resample=Image.BILINEAR)
+	# output_img = cv2.resize(predict_np, (W, H))
 	output_img = np.array(imo)
 	return output_img
     
