@@ -4,5 +4,3 @@ LICENSE
 *.md
 venv
 requirements2.txt
-gradio
-figures
